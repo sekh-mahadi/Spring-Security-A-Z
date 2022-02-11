@@ -1,5 +1,7 @@
 package io.mtech.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,9 +11,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
@@ -56,16 +60,24 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	 * .passwordEncoder(NoOpPasswordEncoder.getInstance());
 	 */
 
-	// //Configuring users using inMemoryAuthentication
+	// //Configuring users using InMemoryUserDetailsManager
 
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		InMemoryUserDetailsManager userDetailsService = new InMemoryUserDetailsManager();
-		UserDetails user = User.withUsername("admin").password("1234").authorities("admin").build();
-		UserDetails user1 = User.withUsername("user").password("1234").authorities("read").build();
-		userDetailsService.createUser(user);
-		userDetailsService.createUser(user1);
-		auth.userDetailsService(userDetailsService);
+	/*
+	 * protected void configure(AuthenticationManagerBuilder auth) throws Exception
+	 * { InMemoryUserDetailsManager userDetailsService = new
+	 * InMemoryUserDetailsManager(); UserDetails user =
+	 * User.withUsername("admin").password("1234").authorities("admin").build();
+	 * UserDetails user1 =
+	 * User.withUsername("user").password("1234").authorities("read").build();
+	 * userDetailsService.createUser(user); userDetailsService.createUser(user1);
+	 * auth.userDetailsService(userDetailsService); }
+	 */
+	@Bean
+	public UserDetailsService userDetailsService(DataSource dataSource) {
+		return new JdbcUserDetailsManager(dataSource);
 	}
+	
+	
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
