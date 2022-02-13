@@ -18,7 +18,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	/*
@@ -72,10 +72,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	 * userDetailsService.createUser(user); userDetailsService.createUser(user1);
 	 * auth.userDetailsService(userDetailsService); }
 	 */
-	@Bean
-	public UserDetailsService userDetailsService(DataSource dataSource) {
-		return new JdbcUserDetailsManager(dataSource);
-	}
+	
+	
+	/*
+	 * @Bean public UserDetailsService userDetailsService(DataSource dataSource) {
+	 * return new JdbcUserDetailsManager(dataSource); }
+	 */
 	
 	
 
