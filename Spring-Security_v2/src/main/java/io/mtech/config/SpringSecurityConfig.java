@@ -1,5 +1,8 @@
 package io.mtech.config;
 
+import java.util.Collections;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -17,6 +20,8 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 //@EnableWebSecurity
@@ -31,7 +36,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// Custom configuration as per our requirement
 
-		http.authorizeRequests()
+		http.cors().configurationSource(new CorsConfigurationSource() {
+
+			@Override
+			public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+				CorsConfiguration config = new CorsConfiguration();
+				config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+				config.setAllowedMethods(Collections.singletonList("*"));
+				config.setAllowCredentials(true);
+				config.setAllowedHeaders(Collections.singletonList("*"));
+				config.setMaxAge(3600L);
+				return config;
+			}
+		}).and().authorizeRequests()
 
 				.antMatchers("/myAcconut").authenticated().antMatchers("/myBalance").authenticated()
 				.antMatchers("/myLoans").authenticated().antMatchers("/myCard").authenticated().antMatchers("/notices")
@@ -73,14 +90,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	 * userDetailsService.createUser(user); userDetailsService.createUser(user1);
 	 * auth.userDetailsService(userDetailsService); }
 	 */
-	
-	
+
 	/*
 	 * @Bean public UserDetailsService userDetailsService(DataSource dataSource) {
 	 * return new JdbcUserDetailsManager(dataSource); }
 	 */
-	
-	
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
