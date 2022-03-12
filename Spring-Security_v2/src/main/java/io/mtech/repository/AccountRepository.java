@@ -4,7 +4,10 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import io.mtech.model.Accounts;
+import io.mtech.model.Customer;
 @Repository
 public interface AccountRepository extends CrudRepository<Accounts, Long> {
-	public Accounts findByCustomerId(int customerId);
+	public Accounts findByCustomerId(Customer customerId);
+	//public Accounts findByCustomerId(Customer customerId);
+
 }

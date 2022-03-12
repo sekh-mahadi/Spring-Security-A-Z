@@ -1,7 +1,7 @@
 package io.mtech.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,9 +14,9 @@ public class AccountController {
 	@Autowired
 	private AccountRepository accountRepository;
 
-	@GetMapping("/myAccount")
-	public Accounts getCardsDetails(@RequestBody Customer customer) {
-		Accounts accounts = accountRepository.findByCustomerId(customer.getId());
+	@PostMapping("/myAccount")
+	public Accounts getAccountsDetails(@RequestBody Customer customer) {
+		Accounts accounts = accountRepository.findByCustomerId(customer);
 		if (accounts != null) {
 			return accounts;
 		} else {
