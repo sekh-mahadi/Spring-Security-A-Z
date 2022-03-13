@@ -24,7 +24,7 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "customer_id", columnDefinition = "INT(11)" , length = 4)
-	//@SequenceGenerator(name = "customer_id_Sequence", sequenceName = "ID_SEQ", allocationSize=1,initialValue=1000)
+	//@SequenceGenerator(name = "customer_id_Sequence", sequenceName = "ID_SEQ", allocationSize=1, initialValue=1000)
 	private int id;
 	private String name;
 	private String email;
