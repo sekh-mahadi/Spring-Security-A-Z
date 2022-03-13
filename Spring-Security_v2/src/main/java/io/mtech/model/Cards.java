@@ -2,11 +2,15 @@ package io.mtech.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -16,11 +20,13 @@ import lombok.Data;
 @Table(name = "Cards")
 public class Cards {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cards_id")
 	private int cardId;
-	@Column(name = "customer_id")
-	private int customerId;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "customer_id")
+	private Customer customerId;
 	@Column(name = "card_number")
 	private String cardNumber;
 	@Column(name = "card_type")
