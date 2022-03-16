@@ -15,7 +15,7 @@ import lombok.Data;
 @Data
 public class Notice {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int noticeId;
 	private String noticeSummary;
 	private String noticeDetails;

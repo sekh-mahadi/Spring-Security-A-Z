@@ -16,7 +16,7 @@ public class NoticesController {
 
 	@GetMapping("/notices")
 	public List<Notice> getNoticessDetails() {
-		List<Notice> notices = noticeRepository.findAllActiveNotices();
+		List<Notice> notices = noticeRepository.findAll();
 		if (notices != null) {
 			return notices;
 		} else {
