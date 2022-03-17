@@ -51,9 +51,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			}
 		}).and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and().authorizeRequests()
 
-				.antMatchers("/myAcconut").hasAuthority("WRITE")
-				.antMatchers("/myBalance").hasAuthority("READ")
-				.antMatchers("/myLoans").hasAuthority("DELETE")
+				.antMatchers("/myAcconut").hasRole("USER")
+				.antMatchers("/myBalance").hasAnyRole("USER", "ADMIN")
+				.antMatchers("/myLoans").hasRole("ROOT")
 				.antMatchers("/myCard").authenticated()
 				.antMatchers("/notices")
 				.permitAll().antMatchers("/contact").permitAll().anyRequest().authenticated().and().formLogin().and()
