@@ -57,4 +57,13 @@ INSERT INTO `notice_details` (notice_summary, notice_details, notice_beg_dt, not
 
 INSERT INTO `notice_details` (notice_summary, notice_details, notice_beg_dt, notice_end_dt, create_dt, update_dt) VALUES ('COVID-19 Insurance', 'Mtech Bank launched an insurance policy which will cover COVID-19 expenses. Please reach out to the branch for more details', '2020-10-14', '2020-12-31', CURDATE(), null);
 
+
+/*Authorites*/
+
+INSERT INTO `authorities` (`customer_id`, `name`)
+ VALUES (1, 'READ');
+ 
+INSERT INTO `authorities` (`customer_id`, `name`)
+ VALUES (1, 'WRITE');
+ 
  
