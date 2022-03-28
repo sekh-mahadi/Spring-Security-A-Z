@@ -20,9 +20,12 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+
+import io.mtech.filter.RequestValidationBeforeFilter;
 
 @Configuration
 //@EnableWebSecurity
@@ -50,8 +53,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				return config;
 			}
 		}).and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and().authorizeRequests()
-
-				.antMatchers("/myAcconut").hasRole("USER")
+          .and().addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+                .authorizeRequests()				
+                .antMatchers("/myAcconut").hasRole("USER")
 				.antMatchers("/myBalance").hasAnyRole("USER", "ADMIN")
 				.antMatchers("/myLoans").hasRole("ROOT")
 				.antMatchers("/myCard").authenticated()
