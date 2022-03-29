@@ -25,6 +25,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import io.mtech.filter.AuthoritiesLoggingAfterFiter;
 import io.mtech.filter.RequestValidationBeforeFilter;
 
 @Configuration
@@ -54,6 +55,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			}
 		}).and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and().authorizeRequests()
           .and().addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+                .addFilterAfter(new AuthoritiesLoggingAfterFiter(), BasicAuthenticationFilter.class)
                 .authorizeRequests()				
                 .antMatchers("/myAcconut").hasRole("USER")
 				.antMatchers("/myBalance").hasAnyRole("USER", "ADMIN")
